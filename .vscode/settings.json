@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "problem.h": "c",
+        "stdio.h": "c",
+        "assert.h": "c"
+    }
+}
