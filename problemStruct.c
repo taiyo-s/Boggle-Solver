@@ -24,8 +24,7 @@ struct problem {
     /* The dimension of the board (number of rows) */
     int dimension;
 
-    /* The board, represented both as a 1-D list and a 2-D list */
-    char *boardFlat;
+    /* The board, represented both as a 2-D list */
     char **board;
 
     /* The partial string. */

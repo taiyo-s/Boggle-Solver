@@ -13,15 +13,14 @@ struct solution;
     Reads the given dictionary file into a set of words
         and the given board file into a 1-D and 2-D representation.
 */
-struct problem *readProblem(FILE *dictFile, FILE *boardFile);
+struct problem *readProblem(FILE *dictFile);
 
 /* 
     Reads the given dictionary file into a set of words,
         the given board file into a 1-D and 2-D representation and
         the given partial string file as a partial string.
 */
-struct problem *readProblemWithPartialWord(FILE *dictFile, FILE *boardFile, 
-    FILE *partialStringFile);
+struct problem *readProblemWithPartialWord(FILE *dictFile);
 
 /*
     Solves the given problem according to Part A's definition

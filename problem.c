@@ -21,6 +21,10 @@
 #include "solutionStruct.c"
 #include "prefixTree.h"
 #include "traversal.h"
+/* Number of cells a Boggle Board has */
+#define BOARD_CELLS 16
+/* Number of rows/cols a Boggle Board has */
+#define BOARD_SIDE_LEN 4
 
 /* Number of words to allocate space for initially. */
 #define INITIALWORDSALLOCATION 64
@@ -98,7 +102,7 @@ ssize_t getdelim(char **lineptr, size_t *n, int delimiter, FILE *stream) {
     Reads the given dict file into a list of words 
     and the given board file into a nxn board.
 */
-struct problem *readProblem(FILE *dictFile, FILE *boardFile){
+struct problem *readProblem(FILE *dictFile){
     struct problem *p = (struct problem *) malloc(sizeof(struct problem));
     assert(p);
 
@@ -117,20 +121,6 @@ struct problem *readProblem(FILE *dictFile, FILE *boardFile){
     if(success == -1){
         /* Encountered an error. */
         perror("Encountered error reading dictionary file");
-        exit(EXIT_FAILURE);
-    } else {
-        /* Assume file contains at least one character. */
-        assert(success > 0);
-    }
-
-    char *boardText = NULL;
-    /* Reset allocated marker. */
-    allocated = 0;
-    success = getdelim(&boardText, &allocated, '\0', boardFile);
-
-    if(success == -1){
-        /* Encountered an error. */
-        perror("Encountered error reading board file");
         exit(EXIT_FAILURE);
     } else {
         /* Assume file contains at least one character. */
@@ -190,67 +180,30 @@ struct problem *readProblem(FILE *dictFile, FILE *boardFile){
         free(dictText);
     }
     
+    char *boardText = malloc((BOARD_CELLS + 1) * sizeof(char));
+    assert(boardText);
+
     /* Now read in board */
-    progress = 0;
-    int dimension = 0;
-    int boardTextLength = strlen(boardText);
-    /* Count dimension with first line */
-    while(progress < boardTextLength){
-        /* Count how many non-space characters appear in line. */
-        if(boardText[progress] == '\n' || boardText[progress] == '\0'){
-            /* Reached end of line. */
-            break;
-        }
-        if(isalpha(boardText[progress])){
-            dimension++;
-        }
-        progress++;
-    }
+    printf("Enter Board Here: ");
+    assert(scanf("%s", boardText) == 1);
 
-    assert(dimension > 0);
+    /* Will fail if integer missing from the start of the words. */
+    assert(strlen(boardText) == BOARD_CELLS);
 
-    /* Check each line has the correct dimension. */
-    for(int i = 1; i < dimension; i++){
-        int rowDim = 0;
-        if(boardText[progress] == '\n'){
-            progress++;
-        }
-        while(progress < boardTextLength){
-            /* Count how many non-space characters appear in line. */
-            if(boardText[progress] == '\n' || boardText[progress] == '\0'){
-                /* Reached end of line. */
-                break;
-            }
-            if(isalpha(boardText[progress])){
-                rowDim++;
-            }
-            progress++;
-        }
-        if(rowDim != dimension){
-            fprintf(stderr, "Row #%d had %d letters, different to Row #1's %d letters.\n", i + 1, rowDim, dimension);
-            assert(rowDim == dimension);
-        }
-    }
-
-    /* Define board. */
-    char *boardFlat = (char *) malloc(sizeof(char) * dimension * dimension);
-    assert(boardFlat);
-    
-    /* Reset progress. */
-    progress = 0;
-    for(int i = 0; i < dimension; i++){
-        for(int j = 0; j < dimension; j++){
-            int nextProgress;
-            assert(sscanf(boardText + progress, "%c %n", &boardFlat[i * dimension + j], &nextProgress) == 1);
-            progress += nextProgress;
-        }
-    }
-
-    char **board = (char **) malloc(sizeof(char **) * dimension);
+    char **board = (char **) malloc(sizeof(char **) * BOARD_SIDE_LEN);
     assert(board);
-    for(int i = 0; i < dimension; i++){
-        board[i] = &boardFlat[i * dimension];
+    for (int i = 0; i < BOARD_SIDE_LEN; i++) {
+        board[i] = malloc(sizeof(char *) * BOARD_SIDE_LEN);
+        assert(board[i]);
     }
+    
+    for(int i = 0; i < BOARD_SIDE_LEN; i++){
+        for(int j = 0; j < BOARD_SIDE_LEN; j++){
+            board[i][j] = boardText[i*BOARD_SIDE_LEN + j];
+        }
+    }
+
+    free(boardText);
 
     /* The number of words in the text. */
     p->wordCount = wordCount;
@@ -258,10 +211,9 @@ struct problem *readProblem(FILE *dictFile, FILE *boardFile){
     p->words = words;
 
     /* The dimension of the board (number of rows) */
-    p->dimension = dimension;
+    p->dimension = BOARD_SIDE_LEN;
 
-    /* The board, represented both as a 1-D list and a 2-D list */
-    p->boardFlat = boardFlat;
+    /* The board, represented both as a 2-D list */
     p->board = board;
 
     p->part = VALID_WORDS;
@@ -269,16 +221,16 @@ struct problem *readProblem(FILE *dictFile, FILE *boardFile){
     return p;
 }
 
-struct problem *readProblemWithPartialWord(FILE *dictFile, FILE *boardFile, 
-    FILE *partialStringFile){
-    /* Fill in Part A sections. */
-    struct problem *p = readProblem(dictFile, boardFile);
+struct problem *readProblemWithPartialWord(FILE *dictFile){
+    struct problem *p = readProblem(dictFile);
 
-    char *partialString = NULL;
+    char *partialString = malloc((BOARD_CELLS + 1) * sizeof(char));
+    assert(partialString);
 
     /* String that is partially given - we assume it follows 
         word conventions for the %s specifier. */
-    assert(fscanf(partialStringFile, "%ms", &partialString) == 1);
+    printf("Enter Partial Word Here: ");
+    assert(scanf("%s", partialString) == 1);
     
     p->part = HINT;
     p->partialString = partialString;
@@ -348,9 +300,6 @@ void freeProblem(struct problem *problem){
         }
         if(problem->board){
             free(problem->board);
-        }
-        if(problem->boardFlat){
-            free(problem->boardFlat);
         }
         if(problem->partialString){
             free(problem->partialString);
