@@ -53,7 +53,7 @@ Input:
 2. For Windows: Simply double click "gethintwin.exe"  
 For Mac: double click "gethintmac.command"
 
-3. Wait for "Enter Board Here" and then input in the board from left to right:
+3. Wait for "Enter Board Here" and then input in the board from left to right, followed by a newline character (Press Enter):
 
 i.e. 
 
@@ -68,7 +68,7 @@ Input:
 
 	abcdefghijklmnop
 
-4. Wait for "Enter Partial Word Here" and then input a partial word:
+4. Wait for "Enter Partial Word Here" and then input a partial word, followed by a newline character (Press Enter):
 
 i.e. 
 
