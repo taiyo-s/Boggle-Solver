@@ -18,7 +18,7 @@ int main(int argc, char **argv){
     /* Load file with dictionary */
     FILE *dictFile = NULL;
     
-    /* Attempt to open dictionary and board files. */
+    /* Attempt to open dictionary */
     dictFile = fopen("10k-dict.txt", "r");
     if(! dictFile){
         fprintf(stderr, "File given as dictionary file was 10k-dict.txt, "

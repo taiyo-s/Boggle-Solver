@@ -167,7 +167,7 @@ void retrieveNextChars(struct prefixTree *tree, char *partialString,
             partialString);
     }
     for (int i = 0; i < CHILD_COUNT; i++) {
-        if (node->children[i]) {
+        if (node->children[i] && node->children[i]->marked) {
             if (isalpha(i)) {
                 chars[*char_num] = i;
                 (*char_num)++; 

@@ -209,7 +209,7 @@ struct problem *readProblem(FILE *dictFile){
     printf("Given board:\n");
     for(int i = 0; i < BOARD_SIDE_LEN; i++){
         for(int j = 0; j < BOARD_SIDE_LEN; j++){
-            printf("%c ", board[i][j]);
+            printf("%c ", toupper(board[i][j]));
         }
         printf("\n");
     }
@@ -351,7 +351,7 @@ struct solution *solveWords(struct problem *p){
     for (int i = 0; i < p->wordCount; i++) {
         addWordToTree(tree, p->words[i]);
     }
-    
+
     /* Keeps track of the used characters in each word. Prevents re-use of 
         characters and re-visiting the same cell on the board 
     */

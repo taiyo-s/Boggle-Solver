@@ -66,7 +66,26 @@ Board:
 
 Input:
 
-	ABCDEFGHIJKLMNOP
+	abcdefghijklmnop
+
+Example:
+
+    Enter Board Here: abcdefghijklmnop
+    Given board:
+    A B C D
+    E F G H
+    I J K L
+    M N O P
+    Valid words:
+    abc
+    feb
+    fin
+    gba
+    ink
+    jim
+    jon
+    knife
+    min
 
 4. Wait for "Enter Partial Word Here" and then input a partial word, followed by a newline character (Press Enter):
 
@@ -74,7 +93,21 @@ i.e.
 
 Input:
 
-	Appl
+    abcdefghijklmnop
+	j
+
+Example:
+
+    Enter Board Here: abcdefghijklmnop
+    Given board:
+    A B C D
+    E F G H
+    I J K L
+    M N O P
+    Enter Partial Word Here: j
+    Hint(s):
+    i
+    o
 
 5. A list of letters following the given input that can follow on the boggle board will be shown.
   
