@@ -162,15 +162,15 @@ void retrieveNextChars(struct prefixTree *tree, char *partialString,
         }
     }
     /* At last letter in partial string */
+    if (node->children['\0']) {
+        printf("\e[32mGiven partial word, '%s' is a valid word\e[0m\n",
+            partialString);
+    }
     for (int i = 0; i < CHILD_COUNT; i++) {
         if (node->children[i]) {
             if (isalpha(i)) {
                 chars[*char_num] = i;
                 (*char_num)++; 
-            }
-            else if (i == '\0') {
-                printf("\e[32mGiven partial word, '%s' is a valid word\e[0m\n", 
-                    partialString);
             }
         }
     }
