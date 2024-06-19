@@ -43,7 +43,9 @@ int main(int argc, char **argv){
 
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
-    printf("Press 'Enter' to exit...\n");
+    printf("------------------------------");
+    printf("\nPress 'Enter' to exit...\n");
+    printf("------------------------------\n");
     getchar();
 
     return EXIT_SUCCESS;
