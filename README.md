@@ -66,7 +66,7 @@ Board:
 
 Input:
 
-	abcdefghijklmnop
+	ABCDEFGHIJKLMNOP
 
 4. Wait for "Enter Partial Word Here" and then input a partial word, followed by a newline character (Press Enter):
 

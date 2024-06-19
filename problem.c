@@ -187,9 +187,12 @@ struct problem *readProblem(FILE *dictFile){
     printf("Enter Board Here: ");
     assert(scanf("%s", boardText) == 1);
 
-    /* Will fail if integer missing from the start of the words. */
-    assert(strlen(boardText) == BOARD_CELLS);
-
+    while (strlen(boardText) != BOARD_CELLS) {
+        printf("\e[31mInvalid Board size (Board must be of size 4x4)\e[0m\n");
+        printf("Enter Board Here: ");
+        assert(scanf("%s", boardText) == 1);
+    }
+    
     char **board = (char **) malloc(sizeof(char **) * BOARD_SIDE_LEN);
     assert(board);
     for (int i = 0; i < BOARD_SIDE_LEN; i++) {
@@ -201,6 +204,14 @@ struct problem *readProblem(FILE *dictFile){
         for(int j = 0; j < BOARD_SIDE_LEN; j++){
             board[i][j] = boardText[i*BOARD_SIDE_LEN + j];
         }
+    }
+
+    printf("Given board:\n");
+    for(int i = 0; i < BOARD_SIDE_LEN; i++){
+        for(int j = 0; j < BOARD_SIDE_LEN; j++){
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
     }
 
     free(boardText);
@@ -247,13 +258,20 @@ void outputProblem(struct problem *problem, struct solution *solution,
     assert(solution);
     switch(problem->part){
         case VALID_WORDS:
+            fprintf(outfileName, "Valid words:\n");
             assert(solution->foundWordCount == 0 || solution->words);
             for(int i = 0; i < solution->foundWordCount; i++){
                 fprintf(outfileName, "%s\n", solution->words[i]);
             }
             break;
         case HINT:
+            printf("Hint(s):\n");
             assert(solution->foundLetterCount == 0 || solution->followLetters);
+            if (!(solution->foundLetterCount)) {
+                fprintf(outfileName, "\e[31mNo words can be made from: %s\e[0m\n", 
+                    problem->partialString);
+                break;
+            }
             for(int i = 0; i < solution->foundLetterCount; i++){
                 if(isalpha(solution->followLetters[i])){
                     fprintf(outfileName, "%c\n", solution->followLetters[i]);
@@ -333,7 +351,10 @@ struct solution *solveWords(struct problem *p){
     for (int i = 0; i < p->wordCount; i++) {
         addWordToTree(tree, p->words[i]);
     }
-
+    
+    /* Keeps track of the used characters in each word. Prevents re-use of 
+        characters and re-visiting the same cell on the board 
+    */
     int *usage = newCharUsage();
     /* Search starting from each cell to determine which words can be made */
     struct prefixTreeNode *node = tree->root;
@@ -370,13 +391,17 @@ struct solution *solveWords(struct problem *p){
 struct solution *solveHint(struct problem *p){
     struct solution *s = newSolution(p);
 
-    int dimension = p->dimension;
-    int *usage = newCharUsage();
-
     struct prefixTree *tree = newPrefixTree();
     for (int i = 0; i < p->wordCount; i++) {
         addWordToTree(tree, p->words[i]);
     }
+
+    int dimension = p->dimension;
+
+    /* Keeps track of the used characters in each word. Prevents re-use of 
+        characters and re-visiting the same cell on the board 
+    */
+    int *usage = newCharUsage();
 
     /* Search starting from each cell to determine which words can be made */
     struct prefixTreeNode *node = tree->root;

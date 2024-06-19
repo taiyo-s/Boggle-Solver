@@ -65,37 +65,7 @@ void retrieveValidWords(struct prefixTree *tree, char ***words, int *word_num) {
     } 
 }
 
-/* Retrieves next characters allowed, given a word is currently in the making */
-void retrieveNextChars(struct prefixTree *tree, char *partialString, 
-    char *chars, int *char_num) {
-    struct prefixTreeNode *node = tree->root;
-    for (int i = 0; partialString[i]; i++) {
-        if (node->children[tolower(partialString[i])]) {
-                /* There are valid words starting with the char at this cell */
-                node = node->children[tolower(partialString[i])];        
-        }
-        else {
-            return;
-        }
-    }
-    /* At last letter in partial string */
-    for (int i = 0; i < CHILD_COUNT; i++) {
-        if (node->children[i]) {
-            if (isalpha(i)) {
-                chars[*char_num] = i;
-                (*char_num)++; 
-            }
-            else {
-                chars[*char_num] = ' ';
-                (*char_num)++; 
-            }
-        }
-    }
-}
-
-/* Returns whether the it is allowed to traverse to the cell we want to for Part 
-    D, meaning there is an extra condition of not allowing re-use of characters 
-*/
+/* Returns whether the it is allowed to traverse to the cell we want to */
 int isValidCell(int row, int col, int dimension, int *usage, char **board) {
     return row >= 0 && col >= 0 && row < dimension && col < dimension &&
            !usage[tolower(board[row][col])];
@@ -176,4 +146,32 @@ void searchFromCell(char **board, int row, int col, int dimension,
     }
 
     usage[tolower(board[row][col])] = UNUSED;
+}
+
+/* Retrieves next characters allowed, given a word is currently in the making */
+void retrieveNextChars(struct prefixTree *tree, char *partialString, 
+    char *chars, int *char_num) {
+    struct prefixTreeNode *node = tree->root;
+    for (int i = 0; partialString[i]; i++) {
+        if (node->children[tolower(partialString[i])]) {
+                /* There are valid words starting with the char at this cell */
+                node = node->children[tolower(partialString[i])];        
+        }
+        else {
+            return;
+        }
+    }
+    /* At last letter in partial string */
+    for (int i = 0; i < CHILD_COUNT; i++) {
+        if (node->children[i]) {
+            if (isalpha(i)) {
+                chars[*char_num] = i;
+                (*char_num)++; 
+            }
+            else if (i == '\0') {
+                printf("\e[32mGiven partial word, '%s' is a valid word\e[0m\n", 
+                    partialString);
+            }
+        }
+    }
 }
