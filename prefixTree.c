@@ -8,7 +8,6 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <error.h>
 #include <string.h>
 
 /* Creational function for a node in prefix trie, returns created new node */
