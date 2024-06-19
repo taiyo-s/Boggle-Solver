@@ -42,5 +42,11 @@ int main(int argc, char **argv){
 
     freeProblem(problem);
 
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+    printf("Press 'Enter' to exit...\n");
+    getchar();
+
+
     return EXIT_SUCCESS;
 }
