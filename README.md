@@ -13,19 +13,6 @@ It implements Depth First Search and a Prefix Trie data structure to compute a l
 
 1. [Download](https://github.com/taiyo-s/Boggle-Solver) the Github Repo
 
-2. For Windows: Simply double click "getwordswin.exe"  
-For Mac: double click "getwordsmac.command"
-
-The game of Boggle is normally played on a 4x4 grid. 16 dice, each die printed with six characters from the letters A to Z, are placed in a closed container and the container is shaken. The dice land in the 4x4 grid and the letter on the top face is the letter for that grid square. A three-minute timer is typically started and players try and make as many words from the letters on the grid as they can before time runs out.
-
-# How It Works
-It implements Depth First Search and a Prefix Trie data structure to compute a list of all the possible valid words, given a board in the game. Also gives hints on next valid letters.
-
-
-# How To Use
-
-1. [Download](https://github.com/taiyo-s/Boggle-Solver) the Github Repo
-
 2. For Windows: Simply double click "getValidWordswin.exe"  
 For Mac: double click "getValidWordsmac.command"
 
@@ -45,6 +32,26 @@ Input:
 	abcdefghijklmnop
 
 4. A list of words that are allowed to be made will be shown.
+
+Example:
+
+    Enter Board Here: abcdefghijklmnop
+    Given board:
+    A B C D
+    E F G H
+    I J K L
+    M N O P
+    Valid words:
+    abc
+    feb
+    fin
+    gba
+    ink
+    jim
+    jon
+    knife
+    min
+
 
 # How To Use - Give hint
 
@@ -68,25 +75,6 @@ Input:
 
 	abcdefghijklmnop
 
-Example:
-
-    Enter Board Here: abcdefghijklmnop
-    Given board:
-    A B C D
-    E F G H
-    I J K L
-    M N O P
-    Valid words:
-    abc
-    feb
-    fin
-    gba
-    ink
-    jim
-    jon
-    knife
-    min
-
 4. Wait for "Enter Partial Word Here" and then input a partial word, followed by a newline character (Press Enter):
 
 i.e. 
@@ -95,6 +83,8 @@ Input:
 
     abcdefghijklmnop
 	j
+
+5. A list of letters following the given input that can follow on the boggle board will be shown.
 
 Example:
 
@@ -108,6 +98,4 @@ Example:
     Hint(s):
     i
     o
-
-5. A list of letters following the given input that can follow on the boggle board will be shown.
   
