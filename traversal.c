@@ -1,9 +1,9 @@
 /*
     Implementation for a graph traversel algorithm, Depth First Search.
  
-    Code Written by Taiyo Siew-Adachi - 1461593, with reference to pseudocode 
-    from lecture slides by Lars Kulik. Modified to a variation for traversing 
-    a 2D array, assumin they are connected
+    Code Written by Taiyo Siew-Adachi, with reference to pseudocode from Lars 
+    Kulik. Modified to a variation for traversing a 2D array, assumin they are 
+    connected
 */
 #include <stdlib.h>
 #include <ctype.h>
