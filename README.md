@@ -1,6 +1,6 @@
 # Boggle Solver
 
-A solver for the board game Boggle.
+A solver for the board game Boggle. Developed for COMP20007 assignment and modified functionality afterwards to be functional for real Boggle games.
 
 # What is Boggle?
 
