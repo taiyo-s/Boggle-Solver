@@ -14,7 +14,7 @@ It implements Depth First Search and a Prefix Trie data structure to compute a l
 1. [Download](https://github.com/taiyo-s/Boggle-Solver) the Github Repo
 
 2. For Windows: Simply double click "getValidWordswin.exe"  
-For Mac: double click "getValidWordsmac"
+For Mac: double click "getValidWordsmac" (currently not working)
 
 3. Wait for "Enter Board Here" and then input in the board from left to right:
 
@@ -58,7 +58,7 @@ Example:
 1. [Download](https://github.com/taiyo-s/Boggle-Solver) the Github Repo
 
 2. For Windows: Simply double click "giveHintwin.exe"  
-For Mac: double click "giveHintmac"
+For Mac: double click "giveHintmac" (currently not working)
 
 3. Wait for "Enter Board Here" and then input in the board from left to right, followed by a newline character (Press Enter):
 
